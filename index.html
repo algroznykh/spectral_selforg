@@ -19,7 +19,7 @@
         color: #e2e8f0 !important;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
-    
+
     /* Tuned typography down so they don't overpower the screen */
     .reveal h1 {
         font-size: 1.8em !important;
@@ -58,6 +58,14 @@
         margin-left: 1.5em !important;
         margin-bottom: 15px !important;
     }
+    .reveal a {
+        color: #ff934f !important;
+        text-decoration: underline !important;
+        transition: color 0.15s ease !important;
+    }
+    .reveal a:hover {
+        color: #ff5e62 !important;
+    }
 
     /* Content block layouts */
     .slide-container {
@@ -81,15 +89,15 @@
 
     /* Cinematic Multi-Column Video Layout */
     .video-grid {
-        display: flex !important; 
+        display: flex !important;
         flex-direction: row !important;
-        justify-content: space-between !important; 
-        gap: 15px !important; 
+        justify-content: space-between !important;
+        gap: 15px !important;
         width: 100% !important;
         margin-top: 10px !important;
     }
     .video-column {
-        flex: 1 !important; 
+        flex: 1 !important;
         text-align: center !important;
         background: rgba(255, 255, 255, 0.02) !important;
         padding: 10px !important;
@@ -99,17 +107,17 @@
     }
     .video-title {
         font-size: 0.65em !important;
-        font-weight: 600 !important; 
+        font-weight: 600 !important;
         color: #ff934f !important;
         margin-bottom: 8px !important;
         text-transform: uppercase !important;
         letter-spacing: 0.05em !important;
     }
-    
+
     /* Micro video elements styling */
     .video-element {
-        width: 100% !important; 
-        max-height: 320px !important; 
+        width: 100% !important;
+        max-height: 320px !important;
         border-radius: 6px !important;
         box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
         background-color: #000;
@@ -117,14 +125,14 @@
 
     /* Target centerpiece video constraints */
     .centerpiece-video {
-        max-height: 340px !important; 
+        max-height: 340px !important;
         width: auto !important;
         border-radius: 10px !important;
         box-shadow: 0 15px 40px rgba(0,0,0,0.6) !important;
         border: 1px solid rgba(255, 255, 255, 0.08) !important;
         margin-top: 10px !important;
     }
-    
+
     /* Dedicated styling for main theorem chart */
     .theorem-image {
         max-height: 480px !important;
@@ -258,36 +266,7 @@
         </aside>
     </section>
 
-    <!-- Slide 6: Double Convolution & Closed-Form Dynamics -->
-    <section>
-        <div class="slide-container">
-            <h2>Double Convolution & Closed-Form Chains</h2>
-            <div class="columns-2">
-                <div class="text-column">
-                    <h3>Bypassing Step-by-Step Execution</h3>
-                    <p>In certain regimes, we can solve multi-step convolutional processes in a single step using exponential operators:</p>
-                    <ol>
-                        <li><span class="highlight">Spatial Step:</span> Generate a seed, optionally applying element-wise functions (e.g., <code style="font-size:0.85em; color:#ff934f;">torch.exp</code>) to emulate growth.</li>
-                        <li><span class="highlight">Frequency Step:</span> Transform to the frequency domain and apply element-wise exponentiation, emulating successive spatial convolutions.</li>
-                        <li><span class="highlight">Inverse Step:</span> Execute the iFFT and project to RGB.</li>
-                    </ol>
-                    <p class="dim" style="margin-top: 10px !important;">Complex patterns can be generated from smooth gradients by feeding values through trigonometric transforms.</p>
-                </div>
-                <div class="text-column">
-                    <h3>Key Insights</h3>
-                    <ul>
-                        <li>Allows infinite-step equivalent evaluations without loop unrolling or accumulation errors.</li>
-                        <li>Computational complexity remains stable: multiple closed-form updates can be calculated in similar timeframes to a single step.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <aside class="notes">
-            By setting up our dynamics as an LTI system with simple activations, we can use exponentiation to analytically compute the state of the NCA at any arbitrary step. We skip step-by-step iterative loops, avoiding error propagation and lowering computational cost.
-        </aside>
-    </section>
-
-    <!-- Slide 7: Closed-Form NCA Regimes -->
+    <!-- Slide 6: Closed-Form NCA Regimes -->
     <section>
         <div class="slide-container">
             <h2>Closed-Form Visualizations</h2>
@@ -314,7 +293,7 @@
         </aside>
     </section>
 
-    <!-- Slide 8: Damage Recovery & Non-Euclidean Topologies -->
+    <!-- Slide 7: Damage Recovery & Non-Euclidean Topologies -->
     <section>
         <div class="slide-container">
             <h2>Properties & Extended Horizons</h2>
@@ -341,22 +320,31 @@
         </aside>
     </section>
 
-    <!-- Slide 9: Conclusion -->
+    <!-- Slide 8: Conclusion and Sources -->
     <section>
         <div class="slide-container">
-            <h2>Summary & Next Steps</h2>
-            <div style="text-align: left; max-width: 850px; margin: 40px auto 0 auto;">
-                <p style="font-size: 0.85em !important; margin-bottom: 20px !important;">
+            <h2>Summary & Resources</h2>
+            <div style="text-align: left; max-width: 950px; margin: 30px auto 0 auto;">
+                <p style="font-size: 0.8em !important; margin-bottom: 15px !important;">
                     Integrating spectral methods into artificial life systems offers several useful capabilities:
                 </p>
-                <ul style="font-size: 0.75em !important; line-height: 1.8 !important;">
+                <ul style="font-size: 0.7em !important; line-height: 1.7 !important; margin-bottom: 30px !important;">
                     <li><span class="highlight">Global context</span> is handled naturally, avoiding the need for deep convolutional hierarchies.</li>
                     <li><span class="highlight">Circular boundary conditions</span> come for free, removing edge artifacts.</li>
                     <li><span class="highlight">Closed-form equations</span> allow us to study complex, long-term spatial trajectories analytically.</li>
                 </ul>
-                <p class="dim" style="margin-top: 40px !important; text-align: center;">
-                    Code & Demos: github.com/algroznykh/closed_form_nca
-                </p>
+
+                <h3 style="font-size: 0.9em !important; border-bottom: 1px solid rgba(255, 147, 79, 0.2); padding-bottom: 4px; margin-bottom: 15px !important;">Sources & Notebooks</h3>
+                <ul style="font-size: 0.65em !important; line-height: 1.6 !important; list-style-type: none !important; margin-left: 0 !important;">
+                    <li style="margin-bottom: 10px !important;">
+                        Spectral NCA: <br>
+                        <a href="https://github.com/algroznykh/spectral_selforg/blob/master/spectral_nca.ipynb" target="_blank">github.com/algroznykh/spectral_selforg/spectral_nca.ipynb</a>
+                    </li>
+                    <li style="margin-bottom: 10px !important;">
+                        Closed-Form NCA : <br>
+                        <a href="https://github.com/algroznykh/closed_form_nca" target="_blank">github.com/algroznykh/closed_form_nca</a>
+                    </li>
+                </ul>
             </div>
         </div>
         <aside class="notes">
