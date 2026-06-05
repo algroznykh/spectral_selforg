@@ -133,15 +133,35 @@
         margin-top: 10px !important;
     }
 
-    /* Dedicated styling for main theorem chart */
-    .theorem-image {
+    /* Maximized centerpiece video styling for the title slide */
+    .title-centerpiece-video {
         max-height: 480px !important;
         width: auto !important;
-        max-width: 90% !important;
+        border-radius: 12px !important;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.6) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        margin: 10px auto 0 auto !important;
+        display: block !important;
+    }
+
+    /* Maximized centerpiece video styling for the Spectral NCA slide */
+    .fft-video {
+        max-height: 500px !important;
+        width: 100% !important;
+        border-radius: 10px !important;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.6) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    /* Expanded styling for main theorem chart */
+    .theorem-image {
+        max-height: 580px !important;
+        width: auto !important;
+        max-width: 95% !important;
         border-radius: 8px !important;
         box-shadow: 0 20px 50px rgba(0,0,0,0.6) !important;
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        margin: 5px auto 0 auto !important;
+        margin: 5px auto !important;
         display: block !important;
     }
 
@@ -161,11 +181,15 @@
 
     <!-- Slide 1: Title -->
     <section>
-        <div class="slide-container">
-            <h1>Self-organizing adventures in the frequency domain</h1>
-            <h2>Aleksandr Groznykh</h2>
-            <p class="dim" style="margin-top: -10px !important;">Exploring Spectral Losses, Fourier NCAs, and LTI Dynamics</p>
-            <video autoplay="true" class="centerpiece-video" controls="" loop="true" muted="true" src="logo_ortho.mp4"></video>
+        <div class="slide-container" style="justify-content: flex-start !important;">
+            <h1 style="margin-bottom: 5px !important;">Self-organizing adventures in frequency domain</h1>
+            <h2 style="font-size: 1.1em !important; margin-bottom: 5px !important; border-bottom: none !important; padding-bottom: 0 !important;">
+                Aleksandr Groznykh &bull; <a href="https://dem.eco" target="_blank">dem.eco</a>
+            </h2>
+            <p class="dim" style="margin-top: 0px !important; margin-bottom: 10px !important; font-size: 0.6em !important;">
+                Exploring Spectral Losses, Fourier NCAs, and LTI Dynamics
+            </p>
+            <video data-autoplay class="title-centerpiece-video" loop muted playsinline src="logo_ortho.mp4"></video>
         </div>
         <aside class="notes">
             Welcome everyone. Today we are looking at self-organizing systems, specifically Neural Cellular Automata (NCA), but from a different angle: through the lens of the frequency and spectral domains. We will explore how alternative representations alter coordinate systems, simplify operations, and provide global coordination.
@@ -207,15 +231,15 @@
             <div class="video-grid">
                 <div class="video-column">
                     <div class="video-title">Target</div>
-                    <video autoplay="" class="video-element" controls="" loop="" muted="" src="chladni_target_c.mp4"></video>
+                    <video data-autoplay class="video-element" loop muted playsinline src="chladni_target_c.mp4"></video>
                 </div>
                 <div class="video-column">
                     <div class="video-title">NCA (MSE loss)</div>
-                    <video autoplay="" class="video-element" controls="" loop="" muted="" src="chladni_l2_incoherent_2.mp4"></video>
+                    <video data-autoplay class="video-element" loop muted playsinline src="chladni_l2_incoherent_2.mp4"></video>
                 </div>
                 <div class="video-column">
                     <div class="video-title">NCA (Fourier loss)</div>
-                    <video autoplay="" class="video-element" controls="" loop="" muted="" src="chladni_fft.mp4"></video>
+                    <video data-autoplay class="video-element" loop muted playsinline src="chladni_fft.mp4"></video>
                 </div>
             </div>
             <p style="margin-top: 15px !important; text-align: center;">
@@ -241,8 +265,8 @@
                         <li>Convolutions inside spatial models are replaced with element-wise multiplications, transforming local dynamics into spectral coordinate modifications.</li>
                     </ul>
                 </div>
-                <div class="text-column">
-                    <video autoplay="true" class="centerpiece-video" controls="" loop="true" muted="true" src="unroll256.mp4" style="margin: 0 auto; width: 100%;"></video>
+                <div class="text-column" style="display: flex; justify-content: center; align-items: center;">
+                    <video data-autoplay class="fft-video" loop muted playsinline src="unroll256.mp4"></video>
                 </div>
             </div>
         </div>
@@ -253,12 +277,11 @@
 
     <!-- Slide 5: Convolution Theorem & LTI Systems -->
     <section>
-        <div class="slide-container">
-            <h2>The Convolution Theorem & LTI NCA</h2>
+        <div class="slide-container" style="justify-content: flex-start !important;">
+            <h2 style="margin-bottom: 5px !important;">The Convolution Theorem & LTI NCA</h2>
             <img alt="Convolution Theorem Matrix Chart" class="theorem-image" src="conv_theorem.png"/>
-            <p style="margin-top: 10px !important; text-align: center; font-size: 0.6em !important;">
-                Note: Standard spatial deep learning "convolutions" are often cross-correlations. <br>
-                In the Fourier domain, spatial circular convolution maps to <span class="highlight">point-wise complex multiplication</span>.
+            <p style="margin-top: 8px !important; text-align: center; font-size: 0.55em !important; line-height: 1.4 !important;">
+                Note: Spatial deep learning "convolutions" are often cross-correlations. In the Fourier domain, circular convolution is <span class="highlight">point-wise multiplication</span>.
             </p>
         </div>
         <aside class="notes">
@@ -273,15 +296,15 @@
             <div class="video-grid">
                 <div class="video-column">
                     <div class="video-title">Texture Synthesis</div>
-                    <video autoplay="" class="video-element" controls="" loop="" muted="" src="proj6_hid16_lat32.mp4"></video>
+                    <video data-autoplay class="video-element" loop muted playsinline src="proj6_hid16_lat32.mp4"></video>
                 </div>
                 <div class="video-column">
                     <div class="video-title">Feature Visualization</div>
-                    <video autoplay="" class="video-element" controls="" loop="" muted="" src="entities_c.mp4"></video>
+                    <video data-autoplay class="video-element" loop muted playsinline src="entities_c.mp4"></video>
                 </div>
                 <div class="video-column">
                     <div class="video-title">Sequence Prediction</div>
-                    <video autoplay="" class="video-element" controls="" loop="" muted="" src="dynamics.mp4"></video>
+                    <video data-autoplay class="video-element" loop muted playsinline src="dynamics.mp4"></video>
                 </div>
             </div>
             <p style="margin-top: 15px !important; text-align: center;">
@@ -373,6 +396,39 @@ require(
             plugins: [RevealNotes],
             width: 1400,
             height: 800
+        });
+
+        // Ensure videos autoplay properly when navigating slides (including backward)
+        function playActiveSlideVideos(currentSlide) {
+            if (!currentSlide) return;
+            var videos = currentSlide.querySelectorAll('video');
+            videos.forEach(function(video) {
+                video.currentTime = 0; // Reset video timeline to the beginning
+                var playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(function(error) {
+                        console.log("Autoplay was prevented on navigation:", error);
+                    });
+                }
+            });
+        }
+
+        function pauseInactiveSlideVideos(previousSlide) {
+            if (!previousSlide) return;
+            var prevVideos = previousSlide.querySelectorAll('video');
+            prevVideos.forEach(function(video) {
+                video.pause();
+            });
+        }
+
+        // Initialize media playback behavior
+        Reveal.on('ready', function(event) {
+            playActiveSlideVideos(event.currentSlide);
+        });
+
+        Reveal.on('slidechanged', function(event) {
+            pauseInactiveSlideVideos(event.previousSlide);
+            playActiveSlideVideos(event.currentSlide);
         });
     }
 );
