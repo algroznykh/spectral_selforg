@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="chrome=1" http-equiv="X-UA-Compatible"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<title>Self-organizing Adventures in the Frequency Domain</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+
+<link href="https://unpkg.com/reveal.js@4.0.2/dist/reveal.css" rel="stylesheet"/>
+<link href="https://unpkg.com/reveal.js@4.0.2/dist/theme/black.css" id="theme" rel="stylesheet"/>
+
+<style type="text/css">
+    /* Global layout foundation overrides */
+    html, body, .reveal, .slides, main {
+        background-color: #0d0d11 !important;
+        color: #e2e8f0 !important;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    
+    /* Tuned typography down so they don't overpower the screen */
+    .reveal h1 {
+        font-size: 1.8em !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.02em !important;
+        text-transform: none !important;
+        background: linear-gradient(135deg, #ff934f, #ff5e62);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 20px !important;
+    }
+    .reveal h2 {
+        font-size: 1.35em !important;
+        font-weight: 700 !important;
+        color: #f1f5f9 !important;
+        text-transform: none !important;
+        letter-spacing: -0.01em !important;
+        margin-bottom: 20px !important;
+        border-bottom: 1px solid rgba(255, 147, 79, 0.2);
+        padding-bottom: 8px;
+        display: inline-block;
+    }
+    .reveal h3 {
+        font-size: 1.0em !important;
+        font-weight: 600 !important;
+        color: #ff934f !important;
+        text-transform: none !important;
+        margin-bottom: 10px !important;
+    }
+    .reveal p, .reveal li {
+        font-size: 0.65em !important;
+        line-height: 1.6 !important;
+        color: #cbd5e1 !important;
+    }
+    .reveal ul {
+        margin-left: 1.5em !important;
+        margin-bottom: 15px !important;
+    }
+
+    /* Content block layouts */
+    .slide-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+    .columns-2 {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 25px !important;
+        align-items: center;
+        text-align: left !important;
+    }
+    .text-column {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    /* Cinematic Multi-Column Video Layout */
+    .video-grid {
+        display: flex !important; 
+        flex-direction: row !important;
+        justify-content: space-between !important; 
+        gap: 15px !important; 
+        width: 100% !important;
+        margin-top: 10px !important;
+    }
+    .video-column {
+        flex: 1 !important; 
+        text-align: center !important;
+        background: rgba(255, 255, 255, 0.02) !important;
+        padding: 10px !important;
+        border-radius: 10px !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.4) !important;
+    }
+    .video-title {
+        font-size: 0.65em !important;
+        font-weight: 600 !important; 
+        color: #ff934f !important;
+        margin-bottom: 8px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+    }
+    
+    /* Micro video elements styling */
+    .video-element {
+        width: 100% !important; 
+        max-height: 320px !important; 
+        border-radius: 6px !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+        background-color: #000;
+    }
+
+    /* Target centerpiece video constraints */
+    .centerpiece-video {
+        max-height: 340px !important; 
+        width: auto !important;
+        border-radius: 10px !important;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.6) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        margin-top: 10px !important;
+    }
+    
+    /* Dedicated styling for main theorem chart */
+    .theorem-image {
+        max-height: 480px !important;
+        width: auto !important;
+        max-width: 90% !important;
+        border-radius: 8px !important;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.6) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        margin: 5px auto 0 auto !important;
+        display: block !important;
+    }
+
+    .highlight {
+        color: #ff934f !important;
+        font-weight: 600;
+    }
+    .dim {
+        color: #64748b !important;
+    }
+</style>
+</head>
+
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- Slide 1: Title -->
+    <section>
+        <div class="slide-container">
+            <h1>Self-organizing adventures in the frequency domain</h1>
+            <h2>Aleksandr Groznykh</h2>
+            <p class="dim" style="margin-top: -10px !important;">Exploring Spectral Losses, Fourier NCAs, and LTI Dynamics</p>
+            <video autoplay="true" class="centerpiece-video" controls="" loop="true" muted="true" src="logo_ortho.mp4"></video>
+        </div>
+        <aside class="notes">
+            Welcome everyone. Today we are looking at self-organizing systems, specifically Neural Cellular Automata (NCA), but from a different angle: through the lens of the frequency and spectral domains. We will explore how alternative representations alter coordinate systems, simplify operations, and provide global coordination.
+        </aside>
+    </section>
+
+    <!-- Slide 2: Why the Spectral Domain? -->
+    <section>
+        <div class="slide-container">
+            <h2>Why the Spectral Domain in ALife?</h2>
+            <div class="columns-2">
+                <div class="text-column">
+                    <h3>Inherent Limitations of Spatial NCAs</h3>
+                    <ul>
+                        <li><span class="highlight">Localized Receptive Fields:</span> Message passing is bounded, requiring many steps to coordinate distal regions.</li>
+                        <li><span class="highlight">Boundary Artifacts:</span> Standard grid representations struggle at borders without arbitrary padding rules.</li>
+                        <li><span class="highlight">Resolution Dependence:</span> Scales poorly when migrating trained weights to higher-resolution canvases.</li>
+                    </ul>
+                </div>
+                <div class="text-column">
+                    <h3>The Fourier Advantage</h3>
+                    <ul>
+                        <li><span class="highlight">Global Communication:</span> A single coefficient in FFT space influences the entire spatial image natively.</li>
+                        <li><span class="highlight">Periodic Boundaries:</span> Frequency domain representations naturally provide periodic (toroidal) boundary conditions.</li>
+                        <li><span class="highlight">Closed-Form Tractability:</span> Linear Time-Invariant (LTI) systems can be evaluated directly across multiple steps.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <aside class="notes">
+            In typical spatial NCAs, coordination across distances is slow because information must diffuse step-by-step. In the frequency domain, every coefficient has a global receptive field. This provides resolution-independence and natural boundary conditions without manual padding.
+        </aside>
+    </section>
+
+    <!-- Slide 3: Fourier Loss & Pattern Emergence -->
+    <section>
+        <div class="slide-container">
+            <h2>Fourier Loss for Structured Environments</h2>
+            <div class="video-grid">
+                <div class="video-column">
+                    <div class="video-title">Target</div>
+                    <video autoplay="" class="video-element" controls="" loop="" muted="" src="chladni_target_c.mp4"></video>
+                </div>
+                <div class="video-column">
+                    <div class="video-title">NCA (MSE loss)</div>
+                    <video autoplay="" class="video-element" controls="" loop="" muted="" src="chladni_l2_incoherent_2.mp4"></video>
+                </div>
+                <div class="video-column">
+                    <div class="video-title">NCA (Fourier loss)</div>
+                    <video autoplay="" class="video-element" controls="" loop="" muted="" src="chladni_fft.mp4"></video>
+                </div>
+            </div>
+            <p style="margin-top: 15px !important; text-align: center;">
+                Standard spatial MSE (L2) loss often leads to incoherent, localized structures. <br>
+                <span class="highlight">Fourier loss</span> matches spectral profiles, yielding coherent modal patterns resembling physical Chladni resonance.
+            </p>
+        </div>
+        <aside class="notes">
+            Here we see a comparison. Training an NCA with pixel-wise L2/MSE loss struggles to capture the global wave-like structure of the target Chladni plate pattern, resulting in localized clusters. Fourier loss matches the spectral density directly, enabling the emergent system to construct coherent standing waves.
+        </aside>
+    </section>
+
+    <!-- Slide 4: NCA in Frequency Domain -->
+    <section>
+        <div class="slide-container">
+            <h2>Running the NCA inside the FFT</h2>
+            <div class="columns-2">
+                <div class="text-column">
+                    <h3>Spectral State Space</h3>
+                    <ul>
+                        <li>Instead of updating pixel states, we execute cellular updates directly in the <span class="highlight">Fourier spectrum</span>.</li>
+                        <li>For real-valued spatial output, we only need to update half of the spectrum (exploiting conjugate symmetry).</li>
+                        <li>Convolutions inside spatial models are replaced with element-wise multiplications, transforming local dynamics into spectral coordinate modifications.</li>
+                    </ul>
+                </div>
+                <div class="text-column">
+                    <video autoplay="true" class="centerpiece-video" controls="" loop="true" muted="true" src="unroll256.mp4" style="margin: 0 auto; width: 100%;"></video>
+                </div>
+            </div>
+        </div>
+        <aside class="notes">
+            What if we run the NCA entirely in the frequency domain? By updating the Fourier coefficients instead of spatial pixels, local update rules map to complex global modifications. We only need to store and update half of the spectrum due to conjugate symmetry, projecting back to space via the inverse FFT.
+        </aside>
+    </section>
+
+    <!-- Slide 5: Convolution Theorem & LTI Systems -->
+    <section>
+        <div class="slide-container">
+            <h2>The Convolution Theorem & LTI NCA</h2>
+            <img alt="Convolution Theorem Matrix Chart" class="theorem-image" src="conv_theorem.png"/>
+            <p style="margin-top: 10px !important; text-align: center; font-size: 0.6em !important;">
+                Note: Standard spatial deep learning "convolutions" are often cross-correlations. <br>
+                In the Fourier domain, spatial circular convolution maps to <span class="highlight">point-wise complex multiplication</span>.
+            </p>
+        </div>
+        <aside class="notes">
+            Let's revisit the convolution theorem. Linear Time-Invariant (LTI) cellular automata rely on convolution. In PyTorch, spatial convolutions are often implemented as cross-correlations and lack periodic boundaries. Operating in the FFT domain implements true circular convolution cleanly and efficiently.
+        </aside>
+    </section>
+
+    <!-- Slide 6: Double Convolution & Closed-Form Dynamics -->
+    <section>
+        <div class="slide-container">
+            <h2>Double Convolution & Closed-Form Chains</h2>
+            <div class="columns-2">
+                <div class="text-column">
+                    <h3>Bypassing Step-by-Step Execution</h3>
+                    <p>In certain regimes, we can solve multi-step convolutional processes in a single step using exponential operators:</p>
+                    <ol>
+                        <li><span class="highlight">Spatial Step:</span> Generate a seed, optionally applying element-wise functions (e.g., <code style="font-size:0.85em; color:#ff934f;">torch.exp</code>) to emulate growth.</li>
+                        <li><span class="highlight">Frequency Step:</span> Transform to the frequency domain and apply element-wise exponentiation, emulating successive spatial convolutions.</li>
+                        <li><span class="highlight">Inverse Step:</span> Execute the iFFT and project to RGB.</li>
+                    </ol>
+                    <p class="dim" style="margin-top: 10px !important;">Complex patterns can be generated from smooth gradients by feeding values through trigonometric transforms.</p>
+                </div>
+                <div class="text-column">
+                    <h3>Key Insights</h3>
+                    <ul>
+                        <li>Allows infinite-step equivalent evaluations without loop unrolling or accumulation errors.</li>
+                        <li>Computational complexity remains stable: multiple closed-form updates can be calculated in similar timeframes to a single step.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <aside class="notes">
+            By setting up our dynamics as an LTI system with simple activations, we can use exponentiation to analytically compute the state of the NCA at any arbitrary step. We skip step-by-step iterative loops, avoiding error propagation and lowering computational cost.
+        </aside>
+    </section>
+
+    <!-- Slide 7: Closed-Form NCA Regimes -->
+    <section>
+        <div class="slide-container">
+            <h2>Closed-Form Visualizations</h2>
+            <div class="video-grid">
+                <div class="video-column">
+                    <div class="video-title">Texture Synthesis</div>
+                    <video autoplay="" class="video-element" controls="" loop="" muted="" src="proj6_hid16_lat32.mp4"></video>
+                </div>
+                <div class="video-column">
+                    <div class="video-title">Feature Visualization</div>
+                    <video autoplay="" class="video-element" controls="" loop="" muted="" src="entities_c.mp4"></video>
+                </div>
+                <div class="video-column">
+                    <div class="video-title">Sequence Prediction</div>
+                    <video autoplay="" class="video-element" controls="" loop="" muted="" src="dynamics.mp4"></video>
+                </div>
+            </div>
+            <p style="margin-top: 15px !important; text-align: center;">
+                Evaluating linear transformations in closed form generates stable textures, complex visual structures, and predictable physical behaviors.
+            </p>
+        </div>
+        <aside class="notes">
+            Here are three examples of systems evaluated through closed-form formulations: organic textures, high-dimensional feature visualizations, and dynamic sequence prediction. These exhibit rich behaviors without requiring classic step-by-step neural cellular updates.
+        </aside>
+    </section>
+
+    <!-- Slide 8: Damage Recovery & Non-Euclidean Topologies -->
+    <section>
+        <div class="slide-container">
+            <h2>Properties & Extended Horizons</h2>
+            <div class="columns-2">
+                <div class="text-column">
+                    <h3>Can Closed-Form Systems Regenerate?</h3>
+                    <ul>
+                        <li>Because they are linear systems, they lack the non-linear attractors typical of traditional NCAs.</li>
+                        <li>However, they can be trained to map <span class="highlight">standing waves</span> to target outputs.</li>
+                        <li>When damaged, the underlying wave properties naturally regenerate the missing visual structures over time.</li>
+                    </ul>
+                </div>
+                <div class="text-column">
+                    <h3>Non-Euclidean Horizons</h3>
+                    <ul>
+                        <li><span class="highlight">Alternative Topologies:</span> We can map coordinates onto manifolds like the Klein bottle using spectral coordinate adjustments.</li>
+                        <li><span class="highlight">Fractional FFT (FRFT):</span> Offers a continuous transition between pure spatial and pure spectral domains, opening up intermediate coordinate spaces.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <aside class="notes">
+            A common question: can these systems repair themselves? Since they are linear, they don't have non-linear attractors. However, by mapping standing waves to targets, physical wave mechanics naturally restore structural integrity after damage. We can also extend this work to complex topologies like Klein bottles or fractional Fourier spaces.
+        </aside>
+    </section>
+
+    <!-- Slide 9: Conclusion -->
+    <section>
+        <div class="slide-container">
+            <h2>Summary & Next Steps</h2>
+            <div style="text-align: left; max-width: 850px; margin: 40px auto 0 auto;">
+                <p style="font-size: 0.85em !important; margin-bottom: 20px !important;">
+                    Integrating spectral methods into artificial life systems offers several useful capabilities:
+                </p>
+                <ul style="font-size: 0.75em !important; line-height: 1.8 !important;">
+                    <li><span class="highlight">Global context</span> is handled naturally, avoiding the need for deep convolutional hierarchies.</li>
+                    <li><span class="highlight">Circular boundary conditions</span> come for free, removing edge artifacts.</li>
+                    <li><span class="highlight">Closed-form equations</span> allow us to study complex, long-term spatial trajectories analytically.</li>
+                </ul>
+                <p class="dim" style="margin-top: 40px !important; text-align: center;">
+                    Code & Demos: github.com/algroznykh/closed_form_nca
+                </p>
+            </div>
+        </div>
+        <aside class="notes">
+            In conclusion, moving between the spatial and frequency domains gives us useful tools for self-organization. It helps manage global relationships and provides mathematically clean updates. Thank you, and I look forward to your questions.
+        </aside>
+    </section>
+
+</div>
+</div>
+</body>
+
+<script>
+require(
+    { waitSeconds: 15 },
+    [
+      "https://unpkg.com/reveal.js@4.0.2/dist/reveal.js",
+      "https://unpkg.com/reveal.js@4.0.2/plugin/notes/notes.js"
+    ],
+    function(Reveal, RevealNotes){
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+            transition: "fade",
+            plugins: [RevealNotes],
+            width: 1400,
+            height: 800
+        });
+    }
+);
+</script>
+</html>
